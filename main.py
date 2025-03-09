@@ -11,12 +11,12 @@ def fetch_irradiance(lat, lon):
     params = {
         "latitude": lat,
         "longitude": lon,
-        "hourly": "shortwave_radiation",  # ECMWF irradiance data
+        "hourly": "shortwave_radiation",
         "timezone": "auto"
     }
     response = requests.get(BASE_URL, params=params)
     data = response.json()
-    return data["hourly"]["shortwave_radiation"]
+    return data.get("hourly", {}).get("shortwave_radiation", [])
 
 @app.get("/forecast")
 def get_irradiance(city: str, lat: float, lon: float):
